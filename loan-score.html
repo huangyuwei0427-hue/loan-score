@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>貸款條件快速評估｜瑋柏重車</title>
+  <style>
+    :root { --bd:#e5e7eb; --tx:#111827; --mut:#6b7280; --bg:#f9fafb; --card:#fff; }
+    body { margin:0; font-family: -apple-system, BlinkMacSystemFont, "Noto Sans TC", "Segoe UI", Roboto, Arial, sans-serif; color:var(--tx); background:var(--bg); }
+    .wrap { max-width:760px; margin:0 auto; padding:20px; }
+    .card { background:var(--card); border:1px solid var(--bd); border-radius:14px; padding:18px; box-shadow:0 1px 0 rgba(0,0,0,.02); }
+    h1 { font-size:20px; margin:0 0 6px; }
+    p { margin:8px 0; line-height:1.5; color:var(--mut); }
+    .grid { display:grid; gap:12px; margin-top:14px; }
+    label { display:block; font-size:14px; margin:2px 0 6px; color:#374151; }
+    select, input[type="number"] {
+      width:100%; padding:12px; border:1px solid var(--bd); border-radius:12px; background:#fff; font-size:16px;
+    }
+    .row { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+    @media (max-width:560px){ .row{ grid-template-columns:1fr; } }
+    .btns { display:flex; gap:10px; margin-top:14px; flex-wrap:wrap; }
+    button {
+      border:1px solid var(--bd); background:#111827; color:#fff; padding:12px 14px; border-radius:12px;
+      font-size:15px; cursor:pointer;
+    }
+    button.secondary { background:#fff; color:#111827; }
+    .badge { display:inline-block; padding:4px 10px; border-radius:999px; border:1px solid var(--bd); font-size:12px; color:#111827; background:#fff; }
+    .result { margin-top:14px; padding:14px; border:1px dashed var(--bd); border-radius:12px; background:#fff; }
+    .kpi { display:flex; gap:10px; flex-wrap:wrap; margin:10px 0; }
+    .kpi div { background:#fff; border:1px solid var(--bd); border-radius:12px; padding:10px 12px; }
+    .kpi b { display:block; font-size:18px; margin-top:2px; }
+    .tips li { margin:6px 0; color:#374151; }
+    .fineprint { font-size:12px; color:var(--mut); margin-top:12px; }
+    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <div style="display:flex; justify-content:space-between; gap:10px; align-items:flex-start;">
+        <div>
+          <h1>貸款條件快速評估 <span class="badge">不查聯徵｜不影響信用</span></h1>
+          <p>本工具為門市初步評估，不是核貸承諾；實際結果以金融機構審核為準。</p>
+        </div>
+        <div class="badge">瑋柏重車</div>
+      </div>
+
+      <div class="grid">
+        <div class="row">
+          <div>
+            <label>身分</label>
+            <select id="identity">
+              <option value="tw">本國人</option>
+              <option value="frc">外籍（有居留證）</option>
+              <option value="frn">外籍（無居留證）</option>
+            </select>
+          </div>
+          <div>
+            <label>工作型態</label>
+            <select id="jobType">
+              <option value="office">上班族（公司）</option>
+              <option value="self">自營／做生意</option>
+              <option value="temp">工地／臨時工</option>
+              <option value="gig">外送／接案</option>
+              <option value="none">目前無固定工作</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="row">
+          <div>
+            <label>目前工作年資</label>
+            <select id="tenure">
+              <option value="lt6">未滿 6 個月</option>
+              <option value="m6to12">6–12 個月</option>
+              <option value="gt12">1 年以上</option>
+            </select>
+          </div>
+          <div>
+            <label>薪資方式</label>
+            <select id="incomeType">
+              <option value="payroll">薪轉（銀行入帳）</option>
+              <option value="transfer">轉帳（不固定）</option>
+              <option value="cash">現金</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="row">
+          <div>
+            <label>是否有勞保</label>
+            <select id="labor">
+              <option value="yes">有</option>
+              <option value="no">沒有</option>
+            </select>
+          </div>
+          <div>
+            <label>最近一年信用狀況</label>
+            <select id="credit">
+              <option value="ok">都正常</option>
+              <option value="late">曾遲繳</option>
+              <option value="loan">有其他貸款</option>
+              <option value="unknown">不確定</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="row">
+          <div>
+            <label>車價（元）</label>
+            <input id="price" type="number" min="0" step="1000" placeholder="例如 280000" />
+          </div>
+          <div>
+            <label>頭款（元）</label>
+            <input id="down" type="number" min="0" step="1000" placeholder="例如 60000" />
+          </div>
+        </div>
+
+        <div class="row">
+          <div>
+            <label>期數</label>
+            <select id="term">
+              <option value="24">24 期</option>
+              <option value="36">36 期</option>
+              <option value="48">48 期</option>
+              <option value="60">60 期</option>
+            </select>
+          </div>
+          <div>
+            <label>月收入（元，填區間也可）</label>
+            <input id="income" type="number" min="0" step="1000" placeholder="例如 42000" />
+          </div>
+        </div>
+      </div>
+
+      <div class="btns">
+        <button id="calc">立即評估</button>
+        <button class="secondary" id="reset">清除重填</button>
+        <button class="secondary" id="copy">複製評估結果（給門市）</button>
+      </div>
+
+      <div id="out" class="result" style="display:none;"></div>
+
+      <div class="fineprint">
+        建議：初評階段不收身分證字號、帳戶與證明照片；需要送件再由門市人工確認。<br/>
+        若你要導到 LINE：把下方程式碼中的 <span class="mono">LINE_URL</span> 換成你的官方帳號連結。
+      </div>
+    </div>
+  </div>
+
+<script>
+  // ====== 可調整參數 ======
+  const SHOP_NAME = "瑋柏重車";
+  const LINE_URL = ""; // 例如 "https://lin.ee/xxxxxxx"
+  // =======================
+
+  function clamp(n, a, b){ return Math.max(a, Math.min(b, n)); }
+
+  function scoreModel(v){
+    let score = 50; // 基礎分
+    const tips = [];
+
+    // 身分硬門檻
+    if(v.identity === "frn"){
+      score -= 40;
+      tips.push("外籍無居留證，多數情況不建議送件；可改現金或提高頭款。");
+    } else if(v.identity === "frc"){
+      score -= 5;
+      tips.push("外籍有居留證：年資與薪資入帳方式會更關鍵。");
+    }
+
+    // 工作型態
+    const jobMap = { office: +10, self: +6, gig: +2, temp: -6, none: -18 };
+    score += (jobMap[v.jobType] ?? 0);
+    if(v.jobType === "none") tips.push("目前無固定工作：可先找保人或提高頭款，或等工作穩定再送件。");
+
+    // 年資
+    const tenMap = { lt6: -10, m6to12: 0, gt12: +8 };
+    score += (tenMap[v.tenure] ?? 0);
+    if(v.tenure === "lt6") tips.push("年資未滿 6 個月：建議累積到 6 個月以上再送件，成功率會差很多。");
+
+    // 薪資方式
+    const incMap = { payroll: +10, transfer: +2, cash: -8 };
+    score += (incMap[v.incomeType] ?? 0);
+    if(v.incomeType !== "payroll") tips.push("薪轉（銀行入帳）通常更容易過件；能改薪轉就先改。");
+
+    // 勞保
+    if(v.labor === "yes") score += 6;
+    else { score -= 4; tips.push("有勞保通常更好過件；若可加保或補齊投保資料會加分。"); }
+
+    // 信用概況
+    const creditMap = { ok: +10, loan: +2, unknown: -2, late: -18 };
+    score += (creditMap[v.credit] ?? 0);
+    if(v.credit === "late") tips.push("曾遲繳：建議先正常繳款一段時間再送件，或提高頭款降低風險。");
+
+    // 頭款比例
+    const price = Number(v.price || 0);
+    const down = Number(v.down || 0);
+    let dp = 0;
+    if(price > 0) dp = clamp(down / price, 0, 1);
+    if(price <= 0){ tips.push("請填車價與頭款，評估會更準。"); }
+    else{
+      if(dp >= 0.35) score += 10;
+      else if(dp >= 0.25) score += 6;
+      else if(dp >= 0.15) score += 2;
+      else { score -= 6; tips.push("頭款偏低：提高到車價 20%～30% 以上，通常更好談。"); }
+    }
+
+    // 月付比（以簡化估算）
+    const term = Number(v.term || 48);
+    const income = Number(v.income || 0);
+    if(price > 0 && income > 0){
+      const loan = Math.max(0, price - down);
+      const estMonthly = loan / term; // 不含利息的粗估，用於風險提示
+      const ratio = estMonthly / income;
+      if(ratio <= 0.25) score += 8;
+      else if(ratio <= 0.35) score += 2;
+      else { score -= 8; tips.push("月繳占收入偏高：可拉長期數或提高頭款，讓月繳壓力下降。"); }
+    } else {
+      tips.push("若填月收入，可自動判斷月繳壓力，結果會更精準。");
+    }
+
+    score = clamp(Math.round(score), 0, 100);
+
+    let grade = "D";
+    let verdict = "不建議現在送件";
+    if(score >= 80){ grade="A"; verdict="機率高，可優先安排送件"; }
+    else if(score >= 65){ grade="B"; verdict="有機會，建議補強後再送"; }
+    else if(score >= 50){ grade="C"; verdict="邊緣，需要調整條件"; }
+
+    // 去重 tips
+    const uniqTips = [...new Set(tips)];
+
+    // 生成評估碼（方便客人貼給你）
+    const code = btoa(unescape(encodeURIComponent(JSON.stringify({
+      s: score, g: grade,
+      i: v.identity, j: v.jobType, t: v.tenure, it: v.incomeType, l: v.labor, c: v.credit,
+      p: price||"", d: down||"", m: income||"", r: new Date().toISOString().slice(0,10)
+    })))).replaceAll("=", "").slice(0, 18);
+
+    return { score, grade, verdict, tips: uniqTips, code };
+  }
+
+  function getValues(){
+    return {
+      identity: document.getElementById("identity").value,
+      jobType: document.getElementById("jobType").value,
+      tenure: document.getElementById("tenure").value,
+      incomeType: document.getElementById("incomeType").value,
+      labor: document.getElementById("labor").value,
+      credit: document.getElementById("credit").value,
+      price: document.getElementById("price").value,
+      down: document.getElementById("down").value,
+      term: document.getElementById("term").value,
+      income: document.getElementById("income").value,
+    };
+  }
+
+  function render(res){
+    const out = document.getElementById("out");
+    const lineBtn = LINE_URL ? `<p><a href="${LINE_URL}" target="_blank" rel="noopener">一鍵聯絡門市（LINE）</a></p>` : "";
+    out.innerHTML = `
+      <div class="kpi">
+        <div><span class="badge">分數</span><b>${res.score}</b></div>
+        <div><span class="badge">等級</span><b>${res.grade}</b></div>
+        <div><span class="badge">判斷</span><b style="font-size:16px">${res.verdict}</b></div>
+        <div><span class="badge">評估碼</span><b class="mono">${res.code}</b></div>
+      </div>
+      <p>建議（提升成功率）：</p>
+      <ul class="tips">${res.tips.map(t=>`<li>${t}</li>`).join("")}</ul>
+      <p class="fineprint">提醒：此為初步評估，不構成核貸承諾；實際利率與核准金額以金融機構審核為準。</p>
+      ${lineBtn}
+    `;
+    out.style.display = "block";
+    return out.innerText;
+  }
+
+  document.getElementById("calc").addEventListener("click", ()=>{
+    const res = scoreModel(getValues());
+    render(res);
+  });
+
+  document.getElementById("reset").addEventListener("click", ()=>{
+    ["price","down","income"].forEach(id=>document.getElementById(id).value="");
+    document.getElementById("out").style.display="none";
+  });
+
+  document.getElementById("copy").addEventListener("click", async ()=>{
+    const res = scoreModel(getValues());
+    const text = `【${SHOP_NAME} 貸款初評】分數：${res.score}｜等級：${res.grade}｜判斷：${res.verdict}｜評估碼：${res.code}`;
+    try{
+      await navigator.clipboard.writeText(text);
+      alert("已複製，可直接貼給門市。");
+    }catch(e){
+      prompt("複製失敗，請手動複製：", text);
+    }
+  });
+</script>
+</body>
+</html>
